@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  favorites Favorite[]
+}
+
+model News {
+  id          Int       @id @default(autoincrement())
+  title       String
+  content     String
+  image       String?
+  category    String
+  publishedAt DateTime
+  favorites   Favorite[]
+}
+
+model Favorite {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  news   News @relation(fields: [newsId], references: [id])
+  newsId Int
+
+  @@unique([userId, newsId]) // a pessoa não pode favoritar a mesma coisa duas vezes
+}
