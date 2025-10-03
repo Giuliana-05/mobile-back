@@ -7,7 +7,8 @@ const userRoutes = require('./routes/userRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes'); 
 
-dotenv.config();
+require('dotenv').config();
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 const app = express();
 const PORT = process.env.PORT || 8080;
